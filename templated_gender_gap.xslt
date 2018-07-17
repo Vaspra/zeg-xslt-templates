@@ -5,53 +5,87 @@
     
     
     <!-- Define your column data -->
-    <xsl:variable name='' select='/row/value[@colname=""]'/>
+    <xsl:variable name='name' select='/row/value[@colname="Name"]'/>
+    <xsl:variable name='gender' select='/row/value[@colname="Gender"]'/>
+    <xsl:variable name='salary' select='/row/value[@colname="Salary"]'/>
+    <xsl:variable name='title' select='/row/value[@colname="Title"]'/>
+    <xsl:variable name='imgName' select='/row/value[@colname="Image Name"]'/>
+    
+    <!-- Define the image URL -->
+    <xsl:variable name='baseImageURL'>https://storage.googleapis.com/zegami-edge/zegs/gender-salaries/</xsl:variable>
+    
+    <xsl:variable name='portraitURL'>
+        <xsl:value-of select='$baseImageURL'/>portraits/<xsl:value-of select='$imgName'/>
+    </xsl:variable>
     
     
     <!-- ===================== Select which variables are going to be used in the relevant template areas ================================== -->
-    <!-- EXAMPLE: <xsl:variable name='titleText' select='{$name}'/> -->
+    <!-- EXAMPLE: <xsl:variable name='titleText'><xsl:value-of select='$name'/></xsl:variable> -->
     <!-- NOTE: If using less than all of these fields, leave the relevant fields blank instead of having an xsl:value-of or TITLE_TEXT -->
     
     
     <!-- Present in all sizes -->
-    <xsl:variable name='titleText'><xsl:value-of select='$TEXT_VARIABLE_NAME_HERE'/></xsl:variable>
-    <xsl:variable name='mainImgURL'><xsl:value-of select='$URL_VARIABLE_NAME_HERE'/></xsl:variable>
+    <xsl:variable name='titleText'><xsl:value-of select='$name'/></xsl:variable>
+    <xsl:variable name='mainImgURL'><xsl:value-of select='$portraitURL'/></xsl:variable>
     
     <!-- Medium panel features -->
-    <xsl:variable name='buttonTitleText'>BUTTON_TITLE_TEXT_HERE</xsl:variable>
-    <xsl:variable name='buttonMainText'><xsl:value-of select='$TEXT_VARIABLE_NAME_HERE}'/></xsl:variable>
+    <xsl:variable name='buttonTitleText'></xsl:variable>
+    <xsl:variable name='buttonMainText'>
+        <xsl:choose>
+            <xsl:when test='$gender = "Male"'>♂</xsl:when>
+            <xsl:otherwise>♀</xsl:otherwise>
+        </xsl:choose>
+    </xsl:variable>
     
     <!-- Large panel details -->
-    <xsl:variable name='detailTitle0'>TITLE0_TEXT_HERE</xsl:variable>
-    <xsl:variable name='detailContent0'><xsl:value-of select='$TEXT_VARIABLE_NAME_HERE'/></xsl:variable>
+    <xsl:variable name='detailTitle0'>Gender</xsl:variable>
+    <xsl:variable name='detailContent0'><xsl:value-of select='$gender'/></xsl:variable>
     
-    <xsl:variable name='detailTitle1'>TITLE1_TEXT_HERE</xsl:variable>
-    <xsl:variable name='detailContent1'><xsl:value-of select='$TEXT_VARIABLE_NAME_HERE'/></xsl:variable>
+    <xsl:variable name='detailTitle1'>Salary</xsl:variable>
+    <xsl:variable name='detailContent1'><xsl:value-of select='$salary'/></xsl:variable>
     
-    <xsl:variable name='detailTitle2'>TITLE2_TEXT_HERE</xsl:variable>
-    <xsl:variable name='detailContent2'><xsl:value-of select='$TEXT_VARIABLE_NAME_HERE'/></xsl:variable>
+    <xsl:variable name='detailTitle2'></xsl:variable>
+    <xsl:variable name='detailContent2'></xsl:variable>
     
-    <xsl:variable name='detailTitle3'>TITLE3_TEXT_HERE</xsl:variable>
-    <xsl:variable name='detailContent3'><xsl:value-of select='$TEXT_VARIABLE_NAME_HERE'/></xsl:variable>
+    <xsl:variable name='detailTitle3'></xsl:variable>
+    <xsl:variable name='detailContent3'></xsl:variable>
     
     
     <!-- =================================== Select the color scheme (found on our Zeplin) ================================================= -->
     
     
-    <xsl:variable name='colorDark'>#3f017d</xsl:variable>
-    <xsl:variable name='colorMid'>#6a50a3</xsl:variable>
-    <xsl:variable name='colorLight'>#b5b7d8</xsl:variable>
-    <xsl:variable name='colorLightest'>#efebf7</xsl:variable>
+    <xsl:variable name='colorDark'>
+        <xsl:choose>
+            <xsl:when test='$gender = "Male"'>#01265b</xsl:when>
+            <xsl:otherwise>#71185c</xsl:otherwise>
+        </xsl:choose>
+    </xsl:variable>
+    
+    <xsl:variable name='colorMid'>
+        <xsl:choose>
+            <xsl:when test='$gender = "Male"'>#09519c</xsl:when>
+            <xsl:otherwise>#a36d97</xsl:otherwise>
+        </xsl:choose>
+    </xsl:variable>
+    
+    <xsl:variable name='colorLight'>
+        <xsl:choose>
+            <xsl:when test='$gender = "Male"'>#9ecae1</xsl:when>
+            <xsl:otherwise>#ceb5c8</xsl:otherwise>
+        </xsl:choose>
+    </xsl:variable>
+    
+    <xsl:variable name='colorLightest'>
+        <xsl:choose>
+            <xsl:when test='$gender = "Male"'>#e0ecf7</xsl:when>
+            <xsl:otherwise>#eae4e9</xsl:otherwise>
+        </xsl:choose>
+    </xsl:variable>
     
     
     <!-- =================================================================================================================================== -->
     
-
     
-    <!-- Get the size class of the panel -->
-    <xsl:variable name='panelSize' select='/row/@size'/>
-    
-
     <!-- Set the global colors -->
     <xsl:variable name='textTitleColor'>#ffffff</xsl:variable>
     <xsl:variable name='textDetailTitleColor'>#909399</xsl:variable>
